@@ -1,0 +1,132 @@
+WORKSHEET 2 - CONDITIONAL / SLAB PROBLEMS
+
+========================================================================================================================
+PROBLEM 1: SMART PARKING SYSTEM
+
+Description: BIKE = Rs.10/hour, CAR = Rs.20/hour, SUV = Rs.30/hour.
+Invalid vehicle type is rejected.
+
+CODE: #include <stdio.h> #include <string.h>
+
+int main() { char type[20]; int hours, rate;
+
+    scanf("%19s", type);
+    scanf("%d", &hours);
+
+    if (strcmp(type,"BIKE")==0) rate=10;
+    else if (strcmp(type,"CAR")==0) rate=20;
+    else if (strcmp(type,"SUV")==0) rate=30;
+    else {
+        printf("Invalid Vehicle Type\n");
+        return 0;
+    }
+
+    printf("Parking Fee: Rs.%d\n", rate*hours);
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 2: TANCET ADMISSION ELIGIBILITY
+
+Description: Eligible only if degree status is VALID, score >=50 and
+percentage >=50.
+
+CODE: #include <stdio.h> #include <string.h>
+
+int main() { char degree[20]; int score; float percentage;
+
+    scanf("%19s", degree);
+    scanf("%d", &score);
+    scanf("%f", &percentage);
+
+    if (strcmp(degree,"VALID")==0 && score>=50 && percentage>=50)
+        printf("ELIGIBLE\n");
+    else
+        printf("NOT ELIGIBLE\n");
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 3: RIDE BOOKING FARE
+
+Description: BIKE = Rs.10/km, AUTO = Rs.15/km, CAR = Rs.20/km.
+
+CODE: #include <stdio.h> #include <string.h>
+
+int main() { char type[20]; int distance, rate;
+
+    scanf("%19s", type);
+    scanf("%d", &distance);
+
+    if (strcmp(type,"BIKE")==0) rate=10;
+    else if (strcmp(type,"AUTO")==0) rate=15;
+    else if (strcmp(type,"CAR")==0) rate=20;
+    else {
+        printf("Invalid Ride Type\n");
+        return 0;
+    }
+
+    printf("Fare: Rs.%d\n", rate*distance);
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 4: TNEA ADMISSION ELIGIBILITY
+
+Description: Eligible only if status is PASSED and Mathematics, Physics
+and Chemistry are all >=50.
+
+CODE: #include <stdio.h> #include <string.h>
+
+int main() { int math, physics, chemistry; char status[20];
+
+    scanf("%d%d%d", &math, &physics, &chemistry);
+    scanf("%19s", status);
+
+    if (strcmp(status,"PASSED")==0 &&
+        math>=50 && physics>=50 && chemistry>=50)
+        printf("ELIGIBLE\n");
+    else
+        printf("NOT ELIGIBLE\n");
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 5: MUNICIPAL WATER TAX
+
+Description: DOMESTIC <=15: Rs.5/unit; DOMESTIC >15: Rs.8/unit.
+COMMERCIAL <=30: Rs.10/unit; COMMERCIAL >30: Rs.15/unit. Any type with 0
+units gets minimum Rs.50.
+
+CODE: #include <stdio.h> #include <string.h>
+
+int main() { char type[20]; int consumption, tax, rate;
+
+    scanf("%19s", type);
+    scanf("%d", &consumption);
+
+    if (consumption == 0)
+        tax = 50;
+    else if (strcmp(type,"DOMESTIC")==0) {
+        rate = (consumption <= 15) ? 5 : 8;
+        tax = consumption * rate;
+    }
+    else if (strcmp(type,"COMMERCIAL")==0) {
+        rate = (consumption <= 30) ? 10 : 15;
+        tax = consumption * rate;
+    }
+    else {
+        printf("Invalid Consumer Type\n");
+        return 0;
+    }
+
+    printf("Water Tax: Rs.%d\n", tax);
+    return 0;
+
+}

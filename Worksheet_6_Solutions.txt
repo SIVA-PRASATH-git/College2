@@ -1,0 +1,296 @@
+WORKSHEET 6 - FUNCTIONS
+
+========================================================================================================================
+PROBLEM 1: SERVER UPTIME PERCENTAGE
+
+Description: Uptime = (Available Hours / Total Hours) * 100.
+
+CODE: #include <stdio.h>
+
+float calculateUptime(int availableHours, int totalHours) {
+if(totalHours==0) return 0.0f; return availableHours*100.0f/totalHours;
+}
+
+int main() { int available,total; scanf(“%d%d”,&available,&total);
+printf(“Uptime: %.2f%%”,calculateUptime(available,total)); return 0; }
+
+========================================================================================================================
+PROBLEM 2: FIND HIGHEST OF THREE
+
+CODE: #include <stdio.h>
+
+int findHighest(int a,int b,int c) { int max=a; if(b>max) max=b;
+if(c>max) max=c; return max; }
+
+int main() { int a,b,c; scanf(“%d%d%d”,&a,&b,&c); printf(“Highest Server
+Load: %d”,findHighest(a,b,c)); return 0; }
+
+========================================================================================================================
+PROBLEM 3: RESPONSE TIME CLASSIFICATION
+
+Description: <=200 -> 1 FAST 201-500 -> 2 ACCEPTABLE >500 -> 3 SLOW
+
+CODE: #include <stdio.h>
+
+int classifyResponse(int responseTime) { if(responseTime<=200) return 1;
+if(responseTime<=500) return 2; return 3; }
+
+int main() { int t,result; scanf(“%d”,&t);
+
+    result=classifyResponse(t);
+
+    if(result==1) printf("Response: FAST\n");
+    else if(result==2) printf("Response: ACCEPTABLE\n");
+    else printf("Response: SLOW\n");
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 4: EMPLOYEE BONUS
+
+Description: 90-100 -> 20% 75-89 -> 15% 60-74 -> 10% <60 -> 5%
+
+CODE: #include <stdio.h>
+
+float calculateBonus(float salary,int score) { if(score>=90 &&
+score<=100) return salary0.20f; if(score>=75) return salary0.15f;
+if(score>=60) return salary0.10f; return salary0.05f; }
+
+int main() { float salary; int score;
+
+    scanf("%f%d",&salary,&score);
+    printf("Bonus: %.2f\n",calculateBonus(salary,score));
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 5: COUNT SUCCESSFUL LOGINS
+
+Description: 1 = successful login, 0 = failed login.
+
+CODE: #include <stdio.h>
+
+int countSuccessful(int login[],int n) { int count=0;
+
+    for(int i=0;i<n;i++)
+        if(login[i]==1) count++;
+
+    return count;
+
+}
+
+int main() { int n; scanf(“%d”,&n);
+
+    int login[n];
+
+    for(int i=0;i<n;i++)
+        scanf("%d",&login[i]);
+
+    printf("Successful Logins: %d\n",countSuccessful(login,n));
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 6: FIND EMPLOYEE FIRST OCCURRENCE
+
+Description: Return first position if found; otherwise -1. Positions
+start from 1.
+
+CODE: #include <stdio.h>
+
+int findEmployee(int id[],int n,int key) { for(int i=0;i<n;i++)
+if(id[i]==key) return i+1;
+
+    return -1;
+
+}
+
+int main() { int n,key; scanf(“%d”,&n);
+
+    int id[n];
+
+    for(int i=0;i<n;i++)
+        scanf("%d",&id[i]);
+
+    scanf("%d",&key);
+
+    int pos=findEmployee(id,n,key);
+
+    if(pos==-1) printf("First Occurrence: Not Found\n");
+    else printf("First Occurrence: Position %d\n",pos);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 7: ROTATE ARRAY RIGHT BY K
+
+Description: Rotate right by K positions. If K>N, use K=K%N.
+
+CODE: #include <stdio.h>
+
+void rotateRight(int arr[],int n,int k) { if(n<=0) return;
+
+    k%=n;
+
+    for(int r=0;r<k;r++) {
+        int last=arr[n-1];
+
+        for(int i=n-1;i>0;i--)
+            arr[i]=arr[i-1];
+
+        arr[0]=last;
+    }
+
+}
+
+int main() { int n,k; scanf(“%d”,&n);
+
+    int arr[n];
+
+    for(int i=0;i<n;i++)
+        scanf("%d",&arr[i]);
+
+    scanf("%d",&k);
+
+    rotateRight(arr,n,k);
+
+    for(int i=0;i<n;i++)
+        printf("%d ",arr[i]);
+
+    printf("\n");
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 8: LONGEST CONTINUOUS INCREASING SEQUENCE
+
+CODE: #include <stdio.h>
+
+int longestIncreasing(int arr[],int n) { if(n<=0) return 0;
+
+    int current=1,longest=1;
+
+    for(int i=1;i<n;i++) {
+        if(arr[i]>arr[i-1]) {
+            current++;
+            if(current>longest) longest=current;
+        }
+        else current=1;
+    }
+
+    return longest;
+
+}
+
+int main() { int n; scanf(“%d”,&n);
+
+    int arr[n];
+
+    for(int i=0;i<n;i++)
+        scanf("%d",&arr[i]);
+
+    printf("Longest Increasing Run: %d\n",
+           longestIncreasing(arr,n));
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 9: USERNAME VALIDATION FUNCTION
+
+Description: Length 6-15, first character alphabet, only
+alphabets/digits/underscore.
+
+CODE: #include <stdio.h> #include <string.h> #include <ctype.h>
+
+int isValidUsername(char username[]) { int len=strlen(username);
+
+    if(len<6 || len>15) return 0;
+    if(!isalpha((unsigned char)username[0])) return 0;
+
+    for(int i=0;username[i];i++)
+        if(!(isalnum((unsigned char)username[i]) ||
+             username[i]=='_'))
+            return 0;
+
+    return 1;
+
+}
+
+int main() { char username[100]; scanf(“%99s”,username);
+
+    if(isValidUsername(username))
+        printf("VALID\n");
+    else
+        printf("INVALID\n");
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 10: ROW TOTAL AND HIGHEST ROW
+
+Description: rowTotal() returns total of a specified row. highestRow()
+returns the team/row with the highest total.
+
+CODE: #include <stdio.h>
+
+int rowTotal(int load[][10],int rows,int cols,int row) { if(row<0 ||
+row>=rows) return -1;
+
+    int sum=0;
+
+    for(int j=0;j<cols;j++)
+        sum+=load[row][j];
+
+    return sum;
+
+}
+
+int highestRow(int load[][10],int rows,int cols) { int best=0; int
+bestTotal=rowTotal(load,rows,cols,0);
+
+    for(int i=1;i<rows;i++) {
+        int total=rowTotal(load,rows,cols,i);
+
+        if(total>bestTotal) {
+            bestTotal=total;
+            best=i;
+        }
+    }
+
+    return best+1;
+
+}
+
+int main() { int rows,cols; scanf(“%d%d”,&rows,&cols);
+
+    int load[rows][10];
+
+    for(int i=0;i<rows;i++)
+        for(int j=0;j<cols;j++)
+            scanf("%d",&load[i][j]);
+
+    int row;
+    scanf("%d",&row);
+
+    printf("Team %d Total Load: %d\n",
+           row,rowTotal(load,rows,cols,row-1));
+
+    printf("Highest Load Team: Team %d\n",
+           highestRow(load,rows,cols));
+
+    return 0;
+
+}

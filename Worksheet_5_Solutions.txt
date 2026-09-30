@@ -1,0 +1,362 @@
+WORKSHEET 5 - 2D ARRAYS AND MATRICES
+
+========================================================================================================================
+PROBLEM 1: DATA CENTER SERVER LOAD MATRIX
+
+Description: Find total CPU usage of each server row.
+
+CODE: #include <stdio.h> int main() { int r,c; scanf(“%d%d”,&r,&c); int
+a[r][c]; for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf(“%d”,&a[i][j]);
+
+    for(int i=0;i<r;i++) {
+        int sum=0;
+        for(int j=0;j<c;j++) sum+=a[i][j];
+        printf("Server %d: %d\n",i+1,sum);
+    }
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 2: IT HELPDESK TICKET MATRIX
+
+Description: Find department with highest row total.
+
+CODE: #include <stdio.h> int main() { int r,c; scanf(“%d%d”,&r,&c); int
+a[r][c]; for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf(“%d”,&a[i][j]);
+
+    int best=0,bestSum=-1;
+    for(int i=0;i<r;i++) {
+        int sum=0;
+        for(int j=0;j<c;j++) sum+=a[i][j];
+        if(sum>bestSum) { bestSum=sum; best=i; }
+    }
+
+    printf("Department %d\n",best+1);
+    printf("Total Tickets: %d\n",bestSum);
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 3: SERVER FAILURE LOCATOR
+
+Description: 0 = failed, 1 = working. Count failures in each
+time-interval column.
+
+CODE: #include <stdio.h> int main() { int r,c; scanf(“%d%d”,&r,&c); int
+a[r][c]; for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf(“%d”,&a[i][j]);
+
+    for(int j=0;j<c;j++) {
+        int count=0;
+        for(int i=0;i<r;i++)
+            if(a[i][j]==0) count++;
+
+        printf("Time %d: %d failure%s\n",j+1,count,count==1?"":"s");
+    }
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 4: SEARCH AN EMPLOYEE ID
+
+Description: Search a 2D matrix and print team/row and position/column.
+
+CODE: #include <stdio.h> int main() { int r,c; scanf(“%d%d”,&r,&c); int
+a[r][c]; for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf(“%d”,&a[i][j]);
+
+    int key; scanf("%d",&key);
+
+    for(int i=0;i<r;i++)
+        for(int j=0;j<c;j++)
+            if(a[i][j]==key) {
+                printf("Employee Found\n");
+                printf("Team: %d\n",i+1);
+                printf("Position: %d\n",j+1);
+                return 0;
+            }
+
+    printf("Employee Not Found\n");
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 5: ROTATE MATRIX 90 DEGREES CLOCKWISE
+
+Description: Use old[i][j] -> new[j][n-1-i].
+
+CODE: #include <stdio.h> int main() { int n; scanf(“%d”,&n); int
+a[n][n], b[n][n];
+
+    for(int i=0;i<n;i++) for(int j=0;j<n;j++) scanf("%d",&a[i][j]);
+
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+            b[j][n-1-i]=a[i][j];
+
+    for(int i=0;i<n;i++) {
+        for(int j=0;j<n;j++) printf("%d ",b[i][j]);
+        printf("\n");
+    }
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 6: HIGHEST-LOAD SERVER
+
+Description: Find maximum CPU value, server number and time interval.
+
+CODE: #include <stdio.h> int main() { int r,c; scanf(“%d%d”,&r,&c); int
+a[r][c];
+
+    for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf("%d",&a[i][j]);
+
+    int max=a[0][0], server=0, interval=0;
+
+    for(int i=0;i<r;i++)
+        for(int j=0;j<c;j++)
+            if(a[i][j]>max) {
+                max=a[i][j];
+                server=i;
+                interval=j;
+            }
+
+    printf("Highest CPU Usage: %d\n",max);
+    printf("Server: %d\n",server+1);
+    printf("Time Interval: %d\n",interval+1);
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 7: PRODUCT INVENTORY MATRIX
+
+Description: Each column is a product. Find total quantity across
+warehouses.
+
+CODE: #include <stdio.h> int main() { int r,c; scanf(“%d%d”,&r,&c); int
+a[r][c];
+
+    for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf("%d",&a[i][j]);
+
+    for(int j=0;j<c;j++) {
+        int sum=0;
+        for(int i=0;i<r;i++) sum+=a[i][j];
+        printf("Product %d: %d\n",j+1,sum);
+    }
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 8: APPLICATION PERMISSION MATRIX
+
+Description: Rows are employees, columns are applications. Count 1s in
+the selected employee row.
+
+CODE: #include <stdio.h> int main() { int r,c; scanf(“%d%d”,&r,&c); int
+a[r][c];
+
+    for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf("%d",&a[i][j]);
+
+    int employee; scanf("%d",&employee);
+
+    if(employee<1 || employee>r) {
+        printf("Invalid Employee\n");
+        return 0;
+    }
+
+    int count=0;
+    for(int j=0;j<c;j++)
+        if(a[employee-1][j]==1) count++;
+
+    printf("Applications Accessible: %d\n",count);
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 9: WORD SEARCH IN EMPLOYEE DIRECTORY
+
+Description: Search a 2D string matrix case-sensitively.
+
+CODE: #include <stdio.h> #include <string.h>
+
+int main() { int r,c; scanf(“%d%d”,&r,&c); char a[r][c][100];
+
+    for(int i=0;i<r;i++)
+        for(int j=0;j<c;j++)
+            scanf("%99s",a[i][j]);
+
+    char key[100]; scanf("%99s",key);
+
+    for(int i=0;i<r;i++)
+        for(int j=0;j<c;j++)
+            if(strcmp(a[i][j],key)==0) {
+                printf("FOUND\n");
+                printf("Row: %d\n",i+1);
+                printf("Column: %d\n",j+1);
+                return 0;
+            }
+
+    printf("NOT FOUND\n");
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 10: FIND DUPLICATE USERNAMES
+
+Description: Find usernames appearing more than once and print each
+duplicate only once.
+
+CODE: #include <stdio.h> #include <string.h>
+
+int main() { int r,c; scanf(“%d%d”,&r,&c); int n=r*c; char a[n][100];
+
+    for(int i=0;i<n;i++) scanf("%99s",a[i]);
+
+    printf("Duplicate Usernames:\n");
+
+    for(int i=0;i<n;i++) {
+        int printed=0;
+
+        for(int k=0;k<i;k++)
+            if(strcmp(a[i],a[k])==0) {
+                printed=1;
+                break;
+            }
+
+        if(printed) continue;
+
+        int count=0;
+        for(int j=0;j<n;j++)
+            if(strcmp(a[i],a[j])==0) count++;
+
+        if(count>1) printf("%s\n",a[i]);
+    }
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 11: DIAGONAL SERVER ANALYSIS
+
+Description: Find main diagonal sum, secondary diagonal sum and their
+difference.
+
+CODE: #include <stdio.h> #include <stdlib.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n][n];
+
+    for(int i=0;i<n;i++) for(int j=0;j<n;j++) scanf("%d",&a[i][j]);
+
+    int mainSum=0, secondarySum=0;
+
+    for(int i=0;i<n;i++) {
+        mainSum += a[i][i];
+        secondarySum += a[i][n-1-i];
+    }
+
+    printf("Main Diagonal Sum: %d\n",mainSum);
+    printf("Secondary Diagonal Sum: %d\n",secondarySum);
+    printf("Difference: %d\n",abs(mainSum-secondarySum));
+
+    return 0;
+
+}
+
+NOTE: The worksheet’s sample secondary diagonal total appears
+inconsistent with the listed matrix. This code follows the stated
+diagonal rule.
+
+========================================================================================================================
+PROBLEM 12: IT DEPARTMENT PERFORMANCE ANALYZER
+
+Description: For each department, find highest, lowest and number of
+scores above 80.
+
+CODE: #include <stdio.h>
+
+int main() { int r,c; scanf(“%d%d”,&r,&c); int a[r][c];
+
+    for(int i=0;i<r;i++) for(int j=0;j<c;j++) scanf("%d",&a[i][j]);
+
+    for(int i=0;i<r;i++) {
+        int high=a[i][0], low=a[i][0], above=0;
+
+        for(int j=0;j<c;j++) {
+            if(a[i][j]>high) high=a[i][j];
+            if(a[i][j]<low) low=a[i][j];
+            if(a[i][j]>80) above++;
+        }
+
+        printf("Department %d\n",i+1);
+        printf("Highest: %d\n",high);
+        printf("Lowest: %d\n",low);
+        printf("Above 80: %d\n",above);
+    }
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 13: SMART IT SERVICE DASHBOARD
+
+Description: Find team totals, peak day, peak-day incidents, number of
+days with total >100, and highest-workload team.
+
+CODE: #include <stdio.h>
+
+int main() { int r,c; scanf(“%d%d”,&r,&c); int a[r][c], teamTotal[r];
+
+    for(int i=0;i<r;i++)
+        for(int j=0;j<c;j++)
+            scanf("%d",&a[i][j]);
+
+    for(int i=0;i<r;i++) {
+        teamTotal[i]=0;
+        for(int j=0;j<c;j++)
+            teamTotal[i]+=a[i][j];
+
+        printf("Team %d Total: %d\n",i+1,teamTotal[i]);
+    }
+
+    int peakDay=0, peakValue=-1, highDays=0;
+
+    for(int j=0;j<c;j++) {
+        int total=0;
+
+        for(int i=0;i<r;i++)
+            total+=a[i][j];
+
+        if(total>peakValue) {
+            peakValue=total;
+            peakDay=j;
+        }
+
+        if(total>100) highDays++;
+    }
+
+    int bestTeam=0;
+    for(int i=1;i<r;i++)
+        if(teamTotal[i]>teamTotal[bestTeam])
+            bestTeam=i;
+
+    printf("Peak Day: %d\n",peakDay+1);
+    printf("Peak Day Incidents: %d\n",peakValue);
+    printf("High-Load Days: %d\n",highDays);
+    printf("Highest Workload Team: %d\n",bestTeam+1);
+
+    return 0;
+
+}
+
+NOTE: The worksheet sample says High-Load Days = 2, but with its stated
+rule (>100) and its sample matrix, only day 5 totals 115. This code
+follows the stated rule.

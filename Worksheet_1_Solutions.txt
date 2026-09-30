@@ -1,0 +1,182 @@
+WORKSHEET 1 - ELECTRICITY BILL + EXERCISES
+
+========================================================================================================================
+PROBLEM 1: ELECTRICITY BILL CALCULATION SYSTEM
+
+Description: Read consumer ID, consumer name and units. Reject negative
+units. Select the tariff slab, calculate charge, add fixed charge of
+Rs.100, and apply 5% surcharge when the bill amount exceeds Rs.2000.
+
+CODE: #include <stdio.h>
+
+int main() { char id[50], name[100]; int units; double rate, charge,
+fixed = 100.0, surcharge = 0.0, total;
+
+    scanf("%49s", id);
+    scanf(" %99[^\n]", name);
+    scanf("%d", &units);
+
+    if (units < 0) {
+        printf("Invalid units\n");
+        return 0;
+    }
+
+    if (units <= 100) rate = 1.50;
+    else if (units <= 300) rate = 2.50;
+    else if (units <= 500) rate = 4.00;
+    else rate = 6.00;
+
+    charge = units * rate;
+    total = charge + fixed;
+
+    if (total > 2000)
+        surcharge = total * 0.05;
+
+    total += surcharge;
+
+    printf("Electricity Bill\n");
+    printf("Consumer ID   : %s\n", id);
+    printf("Consumer Name : %s\n", name);
+    printf("Units         : %d\n", units);
+    printf("Charge        : %.2f\n", charge);
+    printf("Fixed Charge  : %.2f\n", fixed);
+    printf("Surcharge     : %.2f\n", surcharge);
+    printf("Total Bill    : %.2f\n", total);
+
+    return 0;
+
+}
+
+========================================================================================================================
+EXERCISE 1: SLEEPY’S TECHNIQUE - TWO-DIGIT FRACTIONS
+
+Description: The worksheet gives 26/65 = 2/5 as the example but does not
+formally define the technique. This solution uses the apparent rule:
+remove one common non-zero digit and check whether the resulting
+fraction is equal.
+
+CODE: #include <stdio.h>
+
+int main() { for (int n = 10; n <= 99; n++) { for (int d = n + 1; d <=
+99; d++) { int n1=n/10, n2=n%10, d1=d/10, d2=d%10; int x=-1, y=-1;
+
+            if (n1==d1 && n1!=0) { x=n2; y=d2; }
+            else if (n1==d2 && n1!=0) { x=n2; y=d1; }
+            else if (n2==d1 && n2!=0) { x=n1; y=d2; }
+            else if (n2==d2 && n2!=0) { x=n1; y=d1; }
+
+            if (x > 0 && y > 0 && n*y == d*x)
+                printf("%d/%d = %d/%d\n", n, d, x, y);
+        }
+    }
+    return 0;
+
+}
+
+========================================================================================================================
+EXERCISE 2: ONE DUPLICATE AND ONE MISSING FROM 1 TO N
+
+Description: The array should contain 1..N. One value occurs twice and
+one value is absent.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”, &n);
+
+    int freq[n + 1];
+
+    for (int i=0; i<=n; i++) freq[i]=0;
+
+    for (int i=0; i<n; i++) {
+        int x;
+        scanf("%d", &x);
+        if (x>=1 && x<=n) freq[x]++;
+    }
+
+    for (int i=1; i<=n; i++) {
+        if (freq[i]==0) printf("Missing = %d\n", i);
+        if (freq[i]>1) printf("Duplicate = %d\n", i);
+    }
+
+    return 0;
+
+}
+
+========================================================================================================================
+HOMEWORK: ATM WITHDRAWAL SYSTEM - GENERIC TEMPLATE
+
+Description: The worksheet gives only the title, not exact business
+rules. This is a basic balance-checking template.
+
+CODE: #include <stdio.h>
+
+int main() { double balance, amount; scanf(“%lf %lf”, &balance,
+&amount);
+
+    if (amount <= 0)
+        printf("Invalid amount\n");
+    else if (amount > balance)
+        printf("Insufficient balance\n");
+    else {
+        balance -= amount;
+        printf("Withdrawal successful\n");
+        printf("Remaining Balance: %.2f\n", balance);
+    }
+    return 0;
+
+}
+
+========================================================================================================================
+HOMEWORK: IT HELPDESK TICKET PRIORITY SYSTEM - GENERIC TEMPLATE
+
+Description: The worksheet gives only the title, not exact rules. This
+template demonstrates priority classification.
+
+CODE: #include <stdio.h>
+
+int main() { int severity; scanf(“%d”, &severity);
+
+    if (severity < 1 || severity > 5)
+        printf("Invalid severity\n");
+    else if (severity >= 4)
+        printf("HIGH PRIORITY\n");
+    else if (severity >= 2)
+        printf("MEDIUM PRIORITY\n");
+    else
+        printf("LOW PRIORITY\n");
+
+    return 0;
+
+}
+
+========================================================================================================================
+HOMEWORK: ONLINE SHOPPING BILL CALCULATOR - GENERIC TEMPLATE
+
+Description: The worksheet gives only the title, not exact rules. This
+template uses a simple quantity, price and discount structure.
+
+CODE: #include <stdio.h>
+
+int main() { int quantity; double price, subtotal, discount=0, total;
+
+    scanf("%lf %d", &price, &quantity);
+
+    if (price < 0 || quantity < 0) {
+        printf("Invalid input\n");
+        return 0;
+    }
+
+    subtotal = price * quantity;
+
+    if (subtotal >= 5000) discount = subtotal * 0.10;
+    else if (subtotal >= 2000) discount = subtotal * 0.05;
+
+    total = subtotal - discount;
+
+    printf("Subtotal: %.2f\n", subtotal);
+    printf("Discount: %.2f\n", discount);
+    printf("Total: %.2f\n", total);
+
+    return 0;
+
+}

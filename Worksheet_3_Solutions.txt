@@ -1,0 +1,363 @@
+WORKSHEET 3 - 1D ARRAY PATTERNS
+
+========================================================================================================================
+PROBLEM 1: SERVER RESPONSE TIME - PERFORMANCE DEGRADATION
+
+Description: Count every group of three consecutive response times that
+continuously increase. Also find the largest increase between adjacent
+requests.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    int patterns=0, largest=0;
+
+    for(int i=1;i<n;i++) {
+        int inc=a[i]-a[i-1];
+        if(inc>largest) largest=inc;
+
+        if(i>=2 && a[i-2]<a[i-1] && a[i-1]<a[i])
+            patterns++;
+    }
+
+    printf("Degradation Patterns: %d\n",patterns);
+    printf("Largest Increase: %d ms\n",largest);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 2: CPU OVERLOAD SEQUENCE
+
+Description: CPU >80 for three or more consecutive intervals. Count
+overload sequences and find longest.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    int current=0, longest=0, sequences=0;
+
+    for(int i=0;i<n;i++) {
+        if(a[i]>80)
+            current++;
+        else {
+            if(current>=3) sequences++;
+            if(current>longest) longest=current;
+            current=0;
+        }
+    }
+
+    if(current>=3) sequences++;
+    if(current>longest) longest=current;
+
+    printf("Overload Sequences: %d\n",sequences);
+    printf("Longest Overload Duration: %d intervals\n",longest);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 3: NETWORK TRAFFIC SPIKE DETECTOR
+
+Description: A spike occurs when current traffic is at least 50% greater
+than previous traffic. Find count, largest increase and position.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”,&n); double a[n];
+
+    for(int i=0;i<n;i++) scanf("%lf",&a[i]);
+
+    int count=0, position=-1;
+    double largest=0;
+
+    for(int i=1;i<n;i++) {
+        double increase=a[i]-a[i-1];
+
+        if(a[i] >= 1.5*a[i-1]) {
+            count++;
+            if(increase>largest) {
+                largest=increase;
+                position=i+1;
+            }
+        }
+    }
+
+    printf("Number of Spikes: %d\n",count);
+    printf("Largest Spike: %.0f\n",largest);
+    printf("Position: %d\n",position);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 4: E-COMMERCE SALES - BEST GROWTH PERIOD
+
+Description: Find the longest consecutive period of continuously
+increasing sales and total growth.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    int current=1, best=1;
+    int currentStart=0, bestStart=0;
+
+    for(int i=1;i<n;i++) {
+        if(a[i]>a[i-1]) {
+            current++;
+
+            if(current>best) {
+                best=current;
+                bestStart=currentStart;
+            }
+        }
+        else {
+            current=1;
+            currentStart=i;
+        }
+    }
+
+    int bestEnd=bestStart+best-1;
+
+    printf("Longest Increasing Period: %d days\n",best);
+    printf("Total Growth: %d\n",a[bestEnd]-a[bestStart]);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 5: API FAILURE RECOVERY ANALYZER
+
+Description: A recovery sequence occurs when failure count decreases
+continuously. Find the longest sequence.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    int current=1, longest=1;
+
+    for(int i=1;i<n;i++) {
+        if(a[i]<a[i-1]) {
+            current++;
+            if(current>longest) longest=current;
+        }
+        else
+            current=1;
+    }
+
+    printf("Longest Recovery Sequence: %d hours\n",longest);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 6: EMPLOYEE PRODUCTIVITY - RANKING
+
+Description: Find highest, second-highest distinct score, number
+achieving highest score, and rank each employee. Equal scores receive
+the same rank.
+
+CODE: #include <stdio.h> #include <limits.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    int highest=a[0], second=INT_MIN, count=0;
+
+    for(int i=0;i<n;i++) {
+        if(a[i]>highest) {
+            second=highest;
+            highest=a[i];
+        }
+        else if(a[i]>second && a[i]!=highest)
+            second=a[i];
+    }
+
+    for(int i=0;i<n;i++)
+        if(a[i]==highest) count++;
+
+    printf("Highest Score: %d\n",highest);
+    printf("Second Highest Score: %d\n",second);
+    printf("Employees with Highest Score: %d\n",count);
+    printf("Ranks:\n");
+
+    for(int i=0;i<n;i++) {
+        int rank=1;
+
+        for(int j=0;j<n;j++)
+            if(a[j]>a[i]) rank++;
+
+        printf("Employee %d: Rank %d\n",i+1,rank);
+    }
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 7: SUSPICIOUS LOGIN PATTERN
+
+Description: An alert occurs for every sequence of at least three
+consecutive periods with failed attempts >=5. Find number of alert
+sequences, longest sequence and first alert position.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    int current=0, longest=0, alerts=0, first=-1;
+
+    for(int i=0;i<n;i++) {
+        if(a[i]>=5)
+            current++;
+        else {
+            if(current>=3) {
+                alerts++;
+                if(first==-1) first=i-current;
+            }
+
+            if(current>longest) longest=current;
+            current=0;
+        }
+    }
+
+    if(current>=3) {
+        alerts++;
+        if(first==-1) first=n-current;
+    }
+
+    if(current>longest) longest=current;
+
+    printf("Security Alerts: %d\n",alerts);
+    printf("Longest Suspicious Sequence: %d\n",longest);
+    printf("First Alert Position: %d\n",first==-1 ? -1 : first+1);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 8: CLOUD STORAGE - USAGE ANOMALY
+
+Description: Ignore first and last values. A value is an anomaly if its
+difference from the average of its immediate neighbours is greater than
+50 GB.
+
+CODE: #include <stdio.h> #include <math.h>
+
+int main() { int n; scanf(“%d”,&n); double a[n];
+
+    for(int i=0;i<n;i++) scanf("%lf",&a[i]);
+
+    int count=0;
+
+    for(int i=1;i<n-1;i++) {
+        double average=(a[i-1]+a[i+1])/2.0;
+        double difference=fabs(a[i]-average);
+
+        if(difference>50) {
+            count++;
+            printf("Anomaly Position: %d\n",i+1);
+        }
+    }
+
+    printf("Anomalies Detected: %d\n",count);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 9: BUG TREND REVERSAL DETECTOR
+
+Description: Count direction changes: increasing -> decreasing or
+decreasing -> increasing.
+
+CODE: #include <stdio.h>
+
+int main() { int n; scanf(“%d”,&n); int a[n];
+
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    int previous=0, reversals=0;
+
+    for(int i=1;i<n;i++) {
+        int direction=0;
+
+        if(a[i]>a[i-1]) direction=1;
+        else if(a[i]<a[i-1]) direction=-1;
+
+        if(direction!=0) {
+            if(previous!=0 && direction!=previous)
+                reversals++;
+
+            previous=direction;
+        }
+    }
+
+    printf("Trend Reversals: %d\n",reversals);
+
+    return 0;
+
+}
+
+========================================================================================================================
+PROBLEM 10: DEVOPS DEPLOYMENT PERFORMANCE STABILITY
+
+Description: Unstable if deployment time differs by more than 30% from
+previous deployment. Find unstable count, longest stable sequence and
+largest percentage change.
+
+CODE: #include <stdio.h> #include <math.h>
+
+int main() { int n; scanf(“%d”,&n); double a[n];
+
+    for(int i=0;i<n;i++) scanf("%lf",&a[i]);
+
+    int unstable=0;
+    int currentStable=1, longestStable=1;
+    double largest=0;
+
+    for(int i=1;i<n;i++) {
+        double change=fabs(a[i]-a[i-1])*100.0/a[i-1];
+
+        if(change>largest) largest=change;
+
+        if(change>30) {
+            unstable++;
+            currentStable=1;
+        }
+        else {
+            currentStable++;
+            if(currentStable>longestStable)
+                longestStable=currentStable;
+        }
+    }
+
+    printf("Unstable Deployments: %d\n",unstable);
+    printf("Longest Stable Sequence: %d\n",longestStable);
+    printf("Largest Percentage Change: %.2f%%\n",largest);
+
+    return 0;
+
+}
